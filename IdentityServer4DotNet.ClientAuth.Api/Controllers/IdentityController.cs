@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 namespace IdentityServer4DotNet.ClientAuth.Api.Controllers
 {
     [Route("identity")]
-    [Authorize]
+    [Authorize()]
     public class IdentityController : ControllerBase
     {
         [HttpGet()]

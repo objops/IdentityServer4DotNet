@@ -33,7 +33,6 @@ namespace IdentityServer4DotNet.ClientAuth.Api
                 {
                     jwtOptions.RequireHttpsMetadata = false;
                     jwtOptions.Authority = "http://localhost:5000";
-                    //jwtOptions.Audience = OAuthConfig.ApiName;
                     jwtOptions.ApiName = "api1";
                 });
         }
@@ -49,7 +48,7 @@ namespace IdentityServer4DotNet.ClientAuth.Api
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
