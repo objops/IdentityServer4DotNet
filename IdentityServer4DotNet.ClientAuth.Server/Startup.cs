@@ -24,12 +24,13 @@ namespace IdentityServer4DotNet.ClientAuth.Server
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-          
+
             services.AddControllers();
             // 使用内存存储，密钥，客户端和资源来配置身份服务器。
             services.AddIdentityServer().AddDeveloperSigningCredential()
                     .AddInMemoryApiResources(Config.GetApiResources())
-                    .AddInMemoryClients(Config.GetClients());
+                    .AddInMemoryClients(Config.GetClients())
+                     .AddTestUsers(Config.GetUsers()); 
 
         }
 

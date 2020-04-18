@@ -11,21 +11,41 @@ namespace IdentityServer4DotNet.ClientAuth.Client
         static async System.Threading.Tasks.Task Main(string[] args)
         {
 
-
-            var client = new HttpClient();
-            var tokenClient = new TokenClient(client, new TokenClientOptions
+            using (var client = new HttpClient())
             {
-                Address = "http://localhost:5000/connect/token",
-                ClientId = "client",
-                ClientSecret = "secret"
-            });
-            var response = await tokenClient.RequestClientCredentialsTokenAsync("api1");
+                var tokenClient = new TokenClient(client, new TokenClientOptions
+                {
+                    Address = "http://localhost:5000/connect/token",
+                    ClientId = "client",
+                    ClientSecret = "secret"
+                });
+                var response = await tokenClient.RequestClientCredentialsTokenAsync("api1");
 
-            Console.WriteLine(response.AccessToken);
-            client.SetBearerToken(response.AccessToken);
-            string resStr = await client.GetStringAsync("http://localhost:5001/identity");
-            Console.WriteLine(resStr);
-            Console.ReadLine();
+                Console.WriteLine(response.AccessToken);
+                client.SetBearerToken(response.AccessToken);
+                string resStr = await client.GetStringAsync("http://localhost:5001/identity");
+                Console.WriteLine(resStr);
+                Console.ReadLine();
+
+
+            }
+            using (var client = new HttpClient())
+            {
+                var tokenClient = new TokenClient(client, new TokenClientOptions
+                {
+                    Address = "http://localhost:5000/connect/token",
+                    ClientId = "ro.client",
+                    ClientSecret = "secret"
+                });
+                var response = await tokenClient.RequestPasswordTokenAsync("爱丽丝", "password", "api1");
+
+                Console.WriteLine(response.AccessToken);
+                client.SetBearerToken(response.AccessToken);
+                string resStr = await client.GetStringAsync("http://localhost:5001/identity");
+                Console.WriteLine(resStr);
+                Console.ReadLine();
+            }
+
         }
 
 
