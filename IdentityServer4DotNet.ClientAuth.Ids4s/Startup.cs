@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using IdentityServer4;
 using IdentityServer4.Quickstart.UI;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -60,6 +61,20 @@ namespace IdentityServer4DotNet.ClientAuth.Ids4s
 
             // not recommended for production - you need to store your key material somewhere secure
             builder.AddDeveloperSigningCredential();
+
+
+
+            services.AddAuthentication()
+            .AddGoogle(options =>
+            {
+                options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
+
+                // register your IdentityServer with Google at https://console.developers.google.com
+                // enable the Google+ API
+                // set the redirect URI to http://localhost:5000/signin-google
+                options.ClientId = "629456249245-4vf1gvlltllq592coo46hrc8ofqa8cg6.apps.googleusercontent.com";
+                options.ClientSecret = "XhUa6NODSIGOtSPBuGrTeeeW";
+            });
 
         }
 
